@@ -39,15 +39,13 @@ for party in parties:
 
 loss_obj = CoAE_Loss()
 sf.init(parties=parties, log_to_driver=False, address='local')
-# for ew in [0.00, 0.01, 0.03, 0.05, 0.07, 0.10]:
-for ew in [0.001, 0.003, 0.005, 0.007, 0.010]:
+
+for ew in [0.001, 0.003, 0.005, 0.007, 0.010, 0.1]:
     for ds_name, ds_config in DATASETS.items():
         for agg in AGGREGATIONS:
             for blurred in [True]:
                 for method in METHODS:
-                    if method == 'grad_replacement' and ew == '0.001':
-                        continue
-                # for method in ['grad_replacement', ']:
+                    n_times = TIMES 
                     model_config = MODELS[ds_name]
         
                     ds_path = ds_config['data_path']
@@ -60,7 +58,6 @@ for ew in [0.001, 0.003, 0.005, 0.007, 0.010]:
                     coae_path = 'trained_model/{}-{:.3f}.ckpt'.format(num_classes, ew)
                     coae.load_weights(coae_path)
 
-                    print('test', 'method:', method, 'ew:', ew, 'dataset:', ds_name)
                     for i in range(TIMES):
                         # prepare data
                         target_class = ds_args.get('target_class', None)
@@ -121,6 +118,7 @@ for ew in [0.001, 0.003, 0.005, 0.007, 0.010]:
         
                         POISONING_ARGS[party_devices[-1]] = {
                             "train_poisoning_indexes": POISONING_ARGS["train_poisoning_indexes"],
+                            "train_features": train_passive_datas[-1].party_features.numpy(),
                             "valid_poisoning_indexes": POISONING_ARGS["valid_poisoning_indexes"],
                             "train_target_indexes": POISONING_ARGS["train_target_indexes"],
                             "valid_target_indexes": POISONING_ARGS["valid_target_indexes"],

@@ -24,7 +24,6 @@ from tools.metric import asr
 from tools.logger import config_logger, print_log
 
 config_logger(fname='./logs/baseline_gamma.log')
-# config_logger(fname='./logs/baseline_cifar.log')
 
 sf.shutdown()
 # prepare parties

@@ -27,7 +27,7 @@ config_logger(fname='./logs/baseline_aggregation.log')
 
 party_num = PARTY_NUM
 
-for agg in ['naive_sum', 'sum', 'average', 'concatenate'][::-1]:
+for agg in ['naive_sum', 'sum', 'average', 'concatenate']:
     sf.shutdown()
 
     # prepare parties
@@ -51,9 +51,7 @@ for agg in ['naive_sum', 'sum', 'average', 'concatenate'][::-1]:
                 labels_set = orig_dataset.get_label_set()
                 num_classes = len(labels_set)
 
-                n_times = TIMES
-                print('test', ds_name, 'method:', method, 'party number:', party_num)
-                for i in range(n_times):
+                for i in range(TIMES):
                     # prepare data
                     target_class = ds_args.get('target_class', None)
                     if target_class is None:
